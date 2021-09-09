@@ -1,0 +1,111 @@
+---
+swagger: "2.0"
+info:
+  description: "Happily stealing everybody's packets, this service proxies Wattpad\
+    \ client requests to Kevel and may inspect and edit the contents of the request.\
+    \ A more detailed specification of the service's role and requirements as well\
+    \ as the expected requests and responses are also available [here](https://docs.google.com/document/d/1IxvQg1yocMts9VvjBu8skAsNGd0OYGfZLlSH0lDPeIQ/edit)\
+    \ and [here](https://dev.adzerk.com/reference#native-ads-api-overview).\n\n"
+  version: "1.0.0"
+  title: "Kevel-Proxy"
+  termsOfService: ""
+  contact:
+    name: "Money Team"
+host: "adz.wattpad.com"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /health:
+    get:
+      summary: "Health endpoint"
+      description: "Responds with 200 OK for health monitoring"
+      parameters: []
+      responses:
+        200:
+          description: "proxy is up and running"
+  /api/v2:
+    post:
+      summary: "Inspect and Proxy requests and responses to Kevel"
+      description: "Proxy ads request to KEVEL_URL/api/v2 and attempt to open the\
+        \ request and response to and from Kevel for metrics"
+      consumes: []
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          type: "object"
+          description: "Kevel request body"
+        description: "Kevel request body. Refer to [here](https://dev.adzerk.com/reference#native-ads-api-overview) for more information on what is required in the body."
+      responses:
+        200:
+          description: "Request was proxied and the response is from Kevel"
+          schema:
+            type: "object"
+            description: "Kevel response body. It is okay if the decisions are null"
+          examples:
+            application/json:
+                               user:
+                                 key: 319deebac44e2c03c017eaf8e7cfa738055b6173
+                               decisions:
+                                 azk98276:
+                                   adId: 1791696
+                                   creativeId: 1535119
+                                   brandSafetySource: "DOUBLE_VERIFY"
+                                   brandSafetyLevel: 0
+                                   flightId: 1864094
+                                   campaignId: 440510
+                                   clickUrl: 'http://adzerk-direct.wattpad.com/r?e=eyJhdiI6MTQyMTIxLCJhdCI6MzE4LCJidCI6MCwiY20iOjQ0MDUxMCwiY2giOjE3OTAwLCJjayI6e30sImNyIjoxNTM1MTE5LCJkaSI6IjBmMmYxYTJhNGNjZDRjZWNiZGU5NjFlODZjY2MxOWVlIiwiZG0iOjMsImZjIjoxNzkxNjk2LCJmbCI6MTg2NDA5NCwiaXAiOiIyMDkuMTUuMjUuODIiLCJrdyI6InNob3J0IHN0b3J5LHNvbGQtdmlkZW8taW1hLHNvbGQtdmlkZW8tbGFuZCxzdG9yeWF1dGhvcjppbWFnaW5hdG9yMWQiLCJudyI6OTY2MCwicGMiOjAsImVjIjowLCJwciI6OTU2NDUsInJ0IjoxLCJzdCI6NzAzMTAsInVrIjoiMzE5ZGVlYmFjNDRlMmMwM2MwMTdlYWY4ZTdjZmE3MzgwNTViNjE3MyIsInpuIjoxMjYxMzYsInRzIjoxNDgxNTc3MTA2Nzk1LCJwbiI6ImF6azk4Mjc2IiwidXIiOm51bGx9&s=BZkBKlR4rJqYnQUmIpqnzRZnAgw'
+                                   impressionUrl: 'http://adzerk-direct.wattpad.com/i.gif?e=eyJhdiI6MTQyMTIxLCJhdCI6MzE4LCJidCI6MCwiY20iOjQ0MDUxMCwiY2giOjE3OTAwLCJjayI6e30sImNyIjoxNTM1MTE5LCJkaSI6IjBmMmYxYTJhNGNjZDRjZWNiZGU5NjFlODZjY2MxOWVlIiwiZG0iOjMsImZjIjoxNzkxNjk2LCJmbCI6MTg2NDA5NCwiaXAiOiIyMDkuMTUuMjUuODIiLCJrdyI6InNob3J0IHN0b3J5LHNvbGQtdmlkZW8taW1hLHNvbGQtdmlkZW8tbGFuZCxzdG9yeWF1dGhvcjppbWFnaW5hdG9yMWQiLCJudyI6OTY2MCwicGMiOjAsImVjIjowLCJwciI6OTU2NDUsInJ0IjoxLCJzdCI6NzAzMTAsInVrIjoiMzE5ZGVlYmFjNDRlMmMwM2MwMTdlYWY4ZTdjZmE3MzgwNTViNjE3MyIsInpuIjoxMjYxMzYsInRzIjoxNDgxNTc3MTA2Nzk3LCJwbiI6ImF6azk4Mjc2IiwiZnEiOjB9&s=hjVT8EtYAyaE2M5yVYI66cuT3D0'
+                                   contents:
+                                     - type: raw
+                                       body: '{}'
+                                       data:
+                                         height: 300
+                                         width: 200
+                                         customData:
+                                           video:
+                                             id: int_test
+                                             url: 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/3248126/WP_VAST_Video_TEST&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]/kv=10001100&ciu_szs=300x250&cust_params=vid%3DGOTTTEST'
+                                             sdk: ima
+                                           custom:
+                                             background_url_prefix: testv2
+                                             title: The Girl on the Train
+                                             hide_title: false
+                                           type: direct_sold_video
+                                       customTemplate: '{}'
+                                   height: 300
+                                   width: 200
+                                   events:
+                                     - id: 2
+                                       url: 'http://adzerk-direct.wattpad.com/e.gif?e=eyJhdiI6MTQyMTIxLCJhdCI6MzE4LCJidCI6MCwiY20iOjQ0MDUxMCwiY2giOjE3OTAwLCJjayI6e30sImNyIjoxNTM1MTE5LCJkaSI6IjBmMmYxYTJhNGNjZDRjZWNiZGU5NjFlODZjY2MxOWVlIiwiZG0iOjMsImZjIjoxNzkxNjk2LCJmbCI6MTg2NDA5NCwiaXAiOiIyMDkuMTUuMjUuODIiLCJrdyI6InNob3J0IHN0b3J5LHNvbGQtdmlkZW8taW1hLHNvbGQtdmlkZW8tbGFuZCxzdG9yeWF1dGhvcjppbWFnaW5hdG9yMWQiLCJudyI6OTY2MCwicGMiOjAsImVjIjowLCJwciI6OTU2NDUsInJ0IjoxLCJzdCI6NzAzMTAsInVrIjoiMzE5ZGVlYmFjNDRlMmMwM2MwMTdlYWY4ZTdjZmE3MzgwNTViNjE3MyIsInpuIjoxMjYxMzYsInRzIjoxNDgxNTc3MTA2Nzk3LCJwbiI6ImF6azk4Mjc2IiwiZXQiOjJ9&s=zh5TyYlJPaQjMcXMXquBcsUikfI'
+
+        500:
+          description: "The request could not be proxied through due to an internal\
+            \ error in the proxy"
+        502:
+          description: "The request could not be proxied through due to an internal\
+            \ error in the proxy"
+        503:
+          description: "The request could not be proxied through due to an internal\
+            \ error in the proxy"
+    options:
+      summary: "Proxy directly to KEVEL_URL/api/v2"
+      description: "Direct proxy to Kevel"
+      parameters: []
+      responses:
+        200:
+          description: "Request was proxied and the response is from Kevel"
+        500:
+          description: "The request could not be proxied through due to an internal\
+            \ error in the proxy"
+        502:
+          description: "The request could not be proxied through due to an internal\
+            \ error in the proxy"
+        503:
+          description: "The request could not be proxied through due to an internal\
+            \ error in the proxy"
